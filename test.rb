@@ -10,15 +10,15 @@ class ApiParser
   base_uri 'https://newsapi.org/v2/'
 
   def initialize( country, file_name = 'news' )
-    @options = { query: { country: country, apiKey: API_KEY}}
+    @@options = { query: { country: country, apiKey: API_KEY}}
     @file_name = file_name
   end
 
   def self.top_headlines(country, file_name)
-      new(country,file_name )
-      self.class.get( "/top-headlines",@options).parsed_response
-     #pretty_show(parsed_api_page)
-     #save_to_file(parsed_api_page)
+      api_parser = new(country,file_name )
+      parsed_api_page = self.get( "/top-headlines",@@options).parsed_response
+      api_parser.send(:pretty_show, parsed_api_page)
+      api_parser.send(:save_to_file, parsed_api_page)
   end
 
   private
@@ -39,7 +39,6 @@ class ApiParser
   end
 end
 
-#ApiParser.top_headlines('ar')
 ApiParser.top_headlines('ar', "news")
 
 
