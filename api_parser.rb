@@ -48,6 +48,10 @@ class ApiParser
       File.write("#{@file_name}.json", @parsed_news)
     end
   end
+
+  def exist?
+    %w[us ar ua].include?(@country)
+  end
 end
 
 ApiParser.top_headlines('ar', 'news_from_ar')
